@@ -1,0 +1,142 @@
+$spacers: (
+    0: 0,
+    1: 0.25rem,
+    2: 0.5rem,
+    3: 1rem,
+    4: 1.5rem,
+    5: 3rem
+);
+
+$props: (
+    margin: m,
+    padding: p
+);
+
+$directions: (
+    t: -top,
+    b: -bottom,
+    l: -left,
+    r: -right,
+    y: -top,
+    x: -left,
+    '': ''
+);
+
+@each $prop, $abbrev in $props {
+    @each $size, $length in $spacers {
+        @each $dirAbbrev, $direction in $directions {
+            .#{$abbrev}#{$dirAbbrev}-#{$size} {
+                #{$prop}#{$direction}: $length;
+                @if $dirAbbrev == 'y' {
+                    #{$prop}-bottom: $length
+                }
+                @if $dirAbbrev == 'x' {
+                    #{$prop}-rigth: $length
+                }
+            }
+        }
+    }
+}
+
+$sizeDir: (
+    w: width,
+    h: height
+);
+
+@each $abbrev, $prop in $sizeDir {
+    @for $i from 1 through 100 {
+        .#{$abbrev}-#{$i} {
+            #{$prop}: #{$i}#{"%"}
+        }
+    }
+}
+
+$sizeDirRem: (
+    w: width,
+    h: height
+);
+
+@each $abbrev, $prop in $sizeDirRem {
+    @for $i from 1 through 100 {
+        .#{$abbrev}r-#{$i} {
+            #{$prop}: #{$i}#{"rem"}
+        }
+    }
+}
+
+$flexPositionProps: justify-content, align-items, align-content;
+
+$values: (
+    end: end,
+    start: start,
+    between: space-between,
+    around: space-around,
+    evenly: space-evenly,
+    center: center,
+    baseline: baseline
+);
+
+@each $prop in $flexPositionProps {
+    @each $abbrevValue, $value in $values {
+        .#{$prop}-#{$abbrevValue} {
+            #{$prop}: $value
+        }
+    }
+}
+
+$displays: flex, none;
+
+@each $display in $displays {
+    .d-#{$display} {
+        display: $display
+    }
+}
+
+$colors: (
+  dark: #343a40,
+  blue: rgb(76, 76, 137),
+  info: #17a2b8,
+  light: #f8f9fa,
+  white: white,
+  warning: #ffc107,
+  danger: #dc3545,
+  success: #28a745,
+  secondary: #6c757d,
+  primary: #007bff
+);
+
+$colorUses: (
+  bg: background-color,
+  text: color,
+  border: border-color
+);
+
+@each $colorName, $color in $colors {
+  @each $abbrev, $prop in $colorUses {
+    .#{$abbrev}-#{$colorName} {
+      #{$prop}: $color;
+    }
+  }
+}
+
+@each $dirAbbrev, $direction in $directions {
+    @for $i from 1 through 20 {
+        .border#{$dirAbbrev}-#{$i} {
+            border#{$direction}-style: solid;
+            border#{$direction}-width: #{$i}#{'px'};
+
+            @if $dirAbbrev == 'y' {
+                border-bottom-style: solid;
+                border-bottom-width: #{$i}#{'px'}
+            }
+            @if $dirAbbrev == 'x' {
+                border-right-style: solid;
+                border-right-width: #{$i}#{'px'}
+            }
+        }
+    }
+}
+
+.pointer {
+    cursor: pointer;
+}
